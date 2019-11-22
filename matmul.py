@@ -45,8 +45,8 @@ def einsum_matmul(A, B):
     return torch.einsum('ik,kj->ij', A,B)
 
 
-A = torch.randn(100, 1000)
-B = torch.randn(1000, 100)
+A = torch.randn(100, 100)
+B = torch.randn(100, 100)
 
 start = time.time()
 correct = torch.matmul(A, B)
@@ -76,3 +76,10 @@ C = einsum_matmul(A, B)
 diff_einsum = time.time() - start
 assert torch.allclose(C, correct, rtol=1e-3, atol=1e-5)
 print(f'ELAPSED TIME EINSUM MATMUL {diff_einsum}')
+
+start = time.time()
+C = A @ B
+diff_einsum = time.time() - start
+assert torch.allclose(C, correct, rtol=1e-3, atol=1e-5)
+print(f'ELAPSED TIME @ MATMUL {diff_einsum}')
+
